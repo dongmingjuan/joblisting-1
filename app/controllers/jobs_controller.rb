@@ -11,6 +11,9 @@ class JobsController < ApplicationController
   # GET /jobs/1
   # GET /jobs/1.json
   def show
+    if @job.is_hidden
+      redirect_to root_path
+    end 
   end
 
   # GET /jobs/new

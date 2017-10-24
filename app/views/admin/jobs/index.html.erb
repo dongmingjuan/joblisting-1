@@ -10,6 +10,11 @@
       <%= link_to(job.title, admin_job_path(job))%>
     </td>
     <td>
+      <% if job.is_hidden %>
+         <%= link_to("open", open_admin_job_path(job), method: :post )%>
+      <% else %>
+         <%= link_to("close", close_admin_job_path(job), method: :post)%>
+      <% end %>
       <%= link_to("Edit", edit_admin_job_path(job))%>
       <%= link_to("Delete", admin_job_path(job), method: :delete, data: { confirm: "Are you sure?"})%>
     </td>
