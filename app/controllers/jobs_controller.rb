@@ -5,7 +5,14 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.json
   def index
-    @jobs = Job.where(:is_hidden => false).order("created_at DESC")
+    @jobs = case params[:order]
+    when 'by_down_bound'
+      Job.published.order('wage_down_bound DESC')
+    when 'by_upper_bound'
+      Job.published.order('wage_upper_bound DESC')
+    else
+      Job.published.recent
+    end
   end
 
   # GET /jobs/1
@@ -13,7 +20,7 @@ class JobsController < ApplicationController
   def show
     if @job.is_hidden
       redirect_to root_path
-    end 
+    end
   end
 
   # GET /jobs/new
